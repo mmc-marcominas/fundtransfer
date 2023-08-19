@@ -1,10 +1,12 @@
-# MVP-01: POST fund transfer and GET status endpoints
+# MVP-02: POST fund transfer and GET status endpoints
 
 Deliveries:
 
  * a POST endpoint that insert an fund transfer
  * a GET endpoint that returns an author list
- * a database implementation in memory
+ * a database implementation using MongoDB
+ * a RequestIdMiddleware for logging
+ * log request endpoint operations
 
 ## Applied principles
 
@@ -22,24 +24,34 @@ Deliveries:
 
 ## Implementation details
 
-Database in memory was implemented using a dictionary of transfer status and a list of transactions.
+Database access is implemented based on [Microsoft suggestion](https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-7.0&tabs=visual-studio-code).
 
 ``` bash
 ├── Controllers
-│   └── FundTransferController.cs
+│   └── FundTransferController.cs
 ├── Domain
-│   ├── Account.cs
-│   ├── Enums
-│   │   └── TransferStatus.cs
-│   ├── Requests
-│   │   └── TransactionRequest.cs
-│   ├── Responses
-│   │   └── TransferStatusResponse.cs
-│   └── Transaction.cs
+│   ├── Account.cs
+│   ├── DatabaseSettings.cs
+│   ├── Enums
+│   │   └── TransferStatus.cs
+│   ├── Requests
+│   │   └── TransactionRequest.cs
+│   ├── Responses
+│   │   └── TransferStatusResponse.cs
+│   └── Transaction.cs
+├── FundTransfer.csproj
+├── FundTransfer.sln
 ├── Makefile
+├── Middlewares
+│   └── RequestIdMiddleware.cs
 ├── Program.cs
+├── Properties
+│   └── launchSettings.json
 ├── Services
-│   └── TransferService.cs
+│   ├── DatabaseService.cs
+│   └── TransferService.cs
+├── appsettings.Development.json
+└── appsettings.json
 ```
 
 ## Run tests

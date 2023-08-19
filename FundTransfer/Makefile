@@ -2,7 +2,7 @@ ignore := 'test*|obj|bin'
 basePath := ~/projects/personal/interviews/digisystem/fundtransfer/FundTransfer
 bin := ./bin/Release/net6.0/appName
 
-transfer := '{ "accountOrigin": "$(origin)",  "accountDestination": "$(destination)",  "value": $(value) }'
+transaction := '{ "accountOrigin": "$(origin)",  "accountDestination": "$(destination)",  "value": $(value) }'
 url := http://localhost:5010/api/fund-transfer
 
 # Usage samples:
@@ -38,13 +38,13 @@ start:
 
 post-fund-transfer:
 		@echo $(url)/$(id)
-		@echo $(transfer)
+		@echo $(transaction)
 		@curl \
 				--silent \
 				-X POST $(url) \
 			  -H 'accept: */*' \
 				-H 'Content-Type: application/json' \
-				-d $(transfer) \
+				-d $(transaction) \
 				| jq .
 
 get-fund-transfer:

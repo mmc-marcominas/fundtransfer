@@ -1,9 +1,9 @@
 namespace FundTransfer;
 
 /// <summary>
-/// Transfer statuses
+/// Transaction statuses
 /// </summary>
-public enum TransferStatus
+public enum TransactionStatus
 {
     /// <summary>
     /// In queue
@@ -31,19 +31,17 @@ public static class TransferStatusExtensions
     /// <summary>
     /// Get TransferStatus description
     /// </summary>
-    /// <param name="transferStatus"><see cref="TransferStatus"/></param>
-    /// <returns>String representation of <see cref="TransferStatus"/></returns>
-    public static string GetDescription(this TransferStatus transferStatus)
+    /// <param name="transactionStatus"><see cref="TransactionStatus"/></param>
+    /// <returns>String representation of <see cref="TransactionStatus"/></returns>
+    public static string GetDescription(this TransactionStatus transactionStatus)
     {
-        var description = transferStatus switch
+        return transactionStatus switch
         {
-            TransferStatus.InQueue => "In queue",
-            TransferStatus.Processing => "Processing",
-            TransferStatus.Confirmed => "Confirmed",
-            TransferStatus.Error => "Error",
+            TransactionStatus.InQueue => "In queue",
+            TransactionStatus.Processing => "Processing",
+            TransactionStatus.Confirmed => "Confirmed",
+            TransactionStatus.Error => "Error",
             _ => "Undefined",
         };
-
-        return description;
     }
 }

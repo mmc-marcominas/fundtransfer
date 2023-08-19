@@ -1,9 +1,16 @@
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
 namespace FundTransfer;
 /// <summary>
 /// Transaction
 /// </summary>
 public class Transaction
 {
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string? Id { get; set; }
+        
     /// <summary>
     /// Transaction id
     /// </summary>
@@ -20,4 +27,12 @@ public class Transaction
     /// Transaction value
     /// </summary>
     public decimal Value { get; set; }
+    /// <summary>
+    /// Transaction status
+    /// </summary>
+    public string Status { get; set; }
+    /// <summary>
+    /// Last error message
+    /// </summary>
+    public string LastError { get; set; }
 }

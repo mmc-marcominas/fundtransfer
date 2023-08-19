@@ -1,12 +1,16 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
+using FundTransfer;
 using FundTransfer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddSingleton<ITransferService, TransferService>();
+builder.Services.AddSingleton<ITransactionsService, TransactionsService>();
+builder.Services.AddSingleton<TransactionsDatabaseService>();
+builder.Services.Configure<DatabaseSettings>(
+    builder.Configuration.GetSection("TransactionDatabase"));
 
 // Configure o logging
 builder.Services.AddLogging();
@@ -24,6 +28,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseRequestIdMiddleware();
 
 app.UseHttpsRedirection();
 
