@@ -16,4 +16,5 @@ This project aims to deliver:
  
  ## MVP history
 
-  * [mvp-01](./docs/mvp-01.md) - fund transfer POST endpoint
+  * [mvp-01](./docs/mvp-01.md) - fund transfer POST and GET endpoints
+  * [mvp-02](./docs/mvp-02.md) - add MongoDB persistence and RequestIdMiddleware

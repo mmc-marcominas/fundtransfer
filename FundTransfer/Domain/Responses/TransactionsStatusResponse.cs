@@ -4,7 +4,7 @@ namespace FundTransfer;
 /// <summary>
 /// TransferStatus response
 /// </summary>
-public class TransferStatusResponse
+public class TransactionsStatusResponse
 {
     /// <summary>
     /// Status

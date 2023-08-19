@@ -7,26 +7,37 @@ namespace FundTransfer.Controllers;
 [Route("api")]
 public class FundTransferController : ControllerBase
 {
-    private readonly ITransferService _transferService;
-    private readonly ILogger<TransferService> _logger;
+    private readonly ITransactionsService _transferService;
+    private readonly ILogger<FundTransferController> _logger;
 
-    public FundTransferController(ITransferService transferService, ILogger<TransferService> logger)
+    public FundTransferController(ITransactionsService transferService, ILogger<FundTransferController> logger)
     {
         _transferService = transferService;
         _logger = logger;
     }
 
     [HttpPost("fund-transfer")]
-    public IActionResult TransferFunds(TransactionRequest transaction)
+    public async Task<IActionResult> TransferFunds(TransactionRequest transaction)
     {
-        var transactionId = _transferService.InitiateTransfer(transaction.GetTransaction());
+        LogOperation("FundTransferController.TransferFunds - transfer funds requested");
+        var transactionId = await _transferService.InitiateTransfer(transaction.GetTransaction());
+        LogOperation("FundTransferController.TransferFunds - transfer funds TransactionId delivered");
         return Ok(new { TransactionId = transactionId });
     }
 
     [HttpGet("fund-transfer/{transactionId}")]
-    public IActionResult GetTransferStatus(string transactionId)
+    public async Task<IActionResult> GetTransferStatus(string transactionId)
     {
-        var statusResponse = _transferService.GetTransferStatus(transactionId);
+        LogOperation("FundTransferController.GetTransferStatus - get status requested");
+        var statusResponse = await _transferService.GetTransactionStatus(transactionId);
+        LogOperation("FundTransferController.GetTransferStatus - get status delivered");
         return Ok(statusResponse);
+    }
+
+    private void LogOperation(string operationDetails)
+    {
+        var requestId = HttpContext.GetRequestId();
+        var ipAddress = HttpContext.Connection.RemoteIpAddress.ToString();
+        _logger.LogInformation($"Operation: {operationDetails}, IP: {ipAddress}, Request ID: {requestId}");
     }
 }
