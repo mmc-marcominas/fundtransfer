@@ -1,4 +1,4 @@
-# MVP-01: POST fund transfer and GET status endpoints
+# MVP-02: POST fund transfer and GET status endpoints
 
 Deliveries:
 
