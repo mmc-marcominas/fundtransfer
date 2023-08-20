@@ -6,11 +6,14 @@ using FundTransfer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container. Singleton order matters, pay attention on it.
+builder.Services.AddSingleton<ITransactionsQueueService, TransactionsQueueService>();
 builder.Services.AddSingleton<ITransactionsService, TransactionsService>();
 builder.Services.AddSingleton<TransactionsDatabaseService>();
 builder.Services.Configure<DatabaseSettings>(
     builder.Configuration.GetSection("TransactionDatabase"));
+builder.Services.Configure<QueueSettings>(
+    builder.Configuration.GetSection("TransactionQueue"));
 
 // Configure o logging
 builder.Services.AddLogging();
