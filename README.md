@@ -92,9 +92,11 @@ or
   "status": "Error",
   "message": "Transaction not found"
 }
+```
 
  ## MVP history
 
   * [mvp-01](./docs/mvp-01.md) - fund transfer POST and GET endpoints
   * [mvp-02](./docs/mvp-02.md) - add MongoDB persistence and RequestIdMiddleware
-  * [mvp-03](./docs/mvp-03.md) - add MongoDB RabbitMQ producer implementation
+  * [mvp-03](./docs/mvp-03.md) - RabbitMQ publish implentation on API and code improvements
+  * [mvp-04](./docs/mvp-04.md) - add fund transfer Worker to process queue messages

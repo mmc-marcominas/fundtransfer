@@ -1,4 +1,4 @@
-# MVP-03: RabbitMQ publish implentation and code improvements
+# MVP-04: Fund transfer Worker to process queue messages
 
 Deliveries:
 
@@ -10,6 +10,9 @@ Deliveries:
  * RabbitMQ publish implentation
  * add Dockerfile.yml and docker-compose.yml
  * add `Installing, testing and running` README.md section
+ * fund transfer worker creation
+ * update database with status and error message when applicable
+ * use HTTP client factory with polly to improve resilience
 
 ## Applied principles
 
@@ -21,45 +24,40 @@ Deliveries:
  
  * MVP
  
-   * RabbitMQ publish implentation
-   * add Dockerfile.yml and docker-compose.yml
-   * add `Installing, testing and running` README.md section
-   * bonus: code refactor to improve maintenability
+   * fund transfer worker creation
+   * update database with status and error message when applicable
 
 ## Implementation details
 
-Queue access is implemented based on [RabbitMQ suggestion](https://www.rabbitmq.com/tutorials/tutorial-one-dotnet.html).
+External http request is implemented based on [Microsoft suggestion](https://learn.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests).
+
+A improvement to be considered is use of a SDK to avoid code duplication between projects. This worker contains a copy of some code available on API:
+
+ * [TransactionsDatabaseService.cs](../FundTransferWorker/Services/TransactionsDatabaseService.cs)
+ * [DatabaseSettings.cs](../FundTransferWorker/Model/DatabaseSettings.cs)
+ * [QueueSettings.cs](../FundTransferWorker/Model/QueueSettings.cs)
+ * [Transactions.cs](../FundTransferWorker/Model/Transaction.cs)
+
 
 ``` bash
-├── Controllers
-│   └── FundTransferController.cs
-├── Dockerfile.yml
-├── Domain
-│   ├── Account.cs
-│   ├── DatabaseSettings.cs
-│   ├── Enums
-│   │   └── TransactionStatus.cs
-│   ├── QueueSettings.cs
-│   ├── Requests
-│   │   └── TransactionRequest.cs
-│   ├── Responses
-│   │   └── TransactionsStatusResponse.cs
-│   └── Transaction.cs
-├── FundTransfer.csproj
-├── FundTransfer.sln
+├── FundTransferWorker.csproj
+├── FundTransferWorker.sln
 ├── Makefile
-├── Middlewares
-│   └── RequestIdMiddleware.cs
+├── Model
+│   ├── AccountApiSettings.cs
+│   ├── AccountValidationResponse.cs
+│   ├── DatabaseSettings.cs
+│   ├── QueueSettings.cs
+│   └── Transaction.cs
 ├── Program.cs
 ├── Properties
 │   └── launchSettings.json
 ├── Services
-│   ├── TransactionsDatabaseService.cs
-│   ├── TransactionsQueueService.cs
-│   └── TransactionsService.cs
+│   ├── FundTransferService.cs
+│   └── TransactionsDatabaseService.cs
+├── Worker.cs
 ├── appsettings.Development.json
-├── appsettings.json
-└── docker-compose.yml
+└── appsettings.json
 ```
 
 ## Run tests

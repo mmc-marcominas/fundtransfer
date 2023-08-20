@@ -18,9 +18,9 @@ Deliveries:
  
  * MVP
  
-   * deliver a POST endpoint that receive an fund transfer request
-   * deliver a GET endpoint that returns fund transfer status
-   * deliver a Makefile with tests saving and retrieving authors
+   * a database implementation using MongoDB
+   * a RequestIdMiddleware for logging
+   * log request endpoint operations
 
 ## Implementation details
 
