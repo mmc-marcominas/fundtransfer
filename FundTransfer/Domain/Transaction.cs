@@ -1,5 +1,6 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System.Text.Json.Serialization;
 
 namespace FundTransfer;
 /// <summary>
@@ -34,5 +35,6 @@ public class Transaction
     /// <summary>
     /// Last error message
     /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string LastError { get; set; }
 }

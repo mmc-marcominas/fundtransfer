@@ -21,10 +21,15 @@ public interface ITransactionsService
 
 public class TransactionsService : ITransactionsService
 {
+    private readonly ITransactionsQueueService _transactionsQueueService;
     private readonly TransactionsDatabaseService _databaseService;
 
-    public TransactionsService(TransactionsDatabaseService databaseService) =>
-            _databaseService = databaseService;
+    public TransactionsService(TransactionsDatabaseService databaseService, ITransactionsQueueService transactionsQueueService)
+    {
+        _databaseService = databaseService;
+        _transactionsQueueService = transactionsQueueService;
+    }
+            
 
     /// <summary>
     /// <inheritdoc cref="ITransactionsService.InitiateTransfer(Transaction)"/>
@@ -32,7 +37,9 @@ public class TransactionsService : ITransactionsService
     {
         transaction.TransactionId = Guid.NewGuid().ToString();
         transaction.Status = TransactionStatus.InQueue.GetDescription();
+
         await _databaseService.CreateAsync(transaction);
+        _transactionsQueueService.Enqueue(transaction);
 
         return transaction.TransactionId;
     }
@@ -65,5 +72,4 @@ public class TransactionsService : ITransactionsService
 
         return new TransactionsStatusResponse { Status = transaction.Status };
     }
-
 }
