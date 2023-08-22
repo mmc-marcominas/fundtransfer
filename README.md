@@ -100,3 +100,4 @@ or
   * [mvp-02](./docs/mvp-02.md) - add MongoDB persistence and RequestIdMiddleware
   * [mvp-03](./docs/mvp-03.md) - RabbitMQ publish implentation on API and code improvements
   * [mvp-04](./docs/mvp-04.md) - add fund transfer Worker to process queue messages
+  * [mvp-04](./docs/mvp-05.md) - use ELK stack to logging fund transfer Worker operations
