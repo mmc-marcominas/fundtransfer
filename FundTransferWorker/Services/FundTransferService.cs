@@ -54,7 +54,7 @@ public class FundTransferService
   {
     // TODO: use of retry policy do improve success on execution requests
     var httpClient = GetHttpClient();
-    var response = await httpClient.GetAsync($"{httpClient.BaseAddress.AbsoluteUri}/{transaction.AccountOrigin}");
+    var response = await httpClient.GetAsync($"{httpClient?.BaseAddress?.AbsoluteUri}/{transaction.AccountOrigin}");
 
     if (!response.IsSuccessStatusCode)
     {
@@ -69,7 +69,7 @@ public class FundTransferService
       return AccountValidationResponse.GetError("Insuficient fund on origin account");
     }
 
-    response = await httpClient.GetAsync($"{httpClient.BaseAddress.AbsoluteUri}/{transaction.AccountDestination}");
+    response = await httpClient.GetAsync($"{httpClient?.BaseAddress?.AbsoluteUri}/{transaction.AccountDestination}");
     if (!response.IsSuccessStatusCode)
     {
       return AccountValidationResponse.GetError("Problem when retrieving destination account");
