@@ -2,12 +2,18 @@ using FundTransferWorker.Services;
 using Polly;
 using Polly.Extensions.Http;
 
+using Microsoft.AspNetCore.Hosting;
+using Serilog;
+using Serilog.Sinks.Elasticsearch;
+using System.Reflection;
+
 namespace FundTransferWorker;
 
 class Program
 {
     static void Main(string[] args)
     {
+        LogConfiguration.ConfigureLogging();
         CreateHostBuilder(args).Build().Run();
     }
 
@@ -34,5 +40,6 @@ class Program
                 services.AddScoped<FundTransferService>();
                 services.AddSingleton<TransactionsDatabaseService>();
                 services.AddHostedService<Worker>();
-            });
+            })
+            .UseSerilog();
 }
