@@ -34,4 +34,4 @@ start:
 		@docker run --rm -d -p 5000:80 --name fundtransfer-account-api baldini/testacesso
 		@docker run --rm -d -p 27017:27017 --name fundtransfer-mongo mongo:4
 		@docker run --rm -d -p 5672:5672 -p 15672:15672 --name fundtransfer-queue rabbitmq:3-management
-		@docker run --rm -d -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name fundtransfer-elk sebp/elk
+		@docker run --rm -d -p 9200:9200 -p 5601:5601 -it --name fundtransfer-elk nshou/elasticsearch-kibana

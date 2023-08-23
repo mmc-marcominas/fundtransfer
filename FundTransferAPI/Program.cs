@@ -1,10 +1,13 @@
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 using FundTransfer;
 using FundTransfer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+LogConfiguration.ConfigureLogging();
+builder.Host.UseSerilog();
 
 // Add services to the container. Singleton order matters, pay attention on it.
 builder.Services.AddSingleton<ITransactionsQueueService, TransactionsQueueService>();
