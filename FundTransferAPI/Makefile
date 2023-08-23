@@ -10,8 +10,7 @@ url := http://localhost:5010/api/fund-transfer
 #   make build
 #   make publish
 #   make run
-#   make post-fund-transfer origin=35899908 destination=07994406 value=10
-#   make post-fund-transfer origin=1234 destination=4321 value=10
+#   make post-fund-transfer origin=1234 destination=4321 value=1.3
 #   make get-fund-transfer id=f2394e5a-91fb-493a-ad56-0aa1db99d4b0
 
 build:

@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
 
@@ -10,41 +10,39 @@ services:
   #       - 5010:5010
   #     depends_on:
   #       - fund-transfer-account-api
-  #       - mongodb
-  #       - rabbitmq
+  #       - fund-transfer-mongo
+  #       - fund-transfer-queue
+  #       - fund-transfer-elk
 
   fund-transfer-account-api:
     image: baldini/testacesso
-    container_name: fundtransfer-account-api
+    container_name: fund-transfer-account-api
     ports:
-      - 5000:80
+      - "5000:80"
+    restart: always
 
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb
-    environment:
-      - 'MONGODB_USER=user'
-      - 'MONGODB_PASS=password!'
-    volumes:
-      - 'mongodb-data:/data/db'
+  fund-transfer-mongo:
+    image: mongo:4
+    container_name: fund-transfer-mongo
     ports:
-      - '27017:27017'
-    command: mongod --smallfiles
+      - "27017:27017"
+    restart: always
 
-  rabbitmq:
-    image: 'rabbitmq:3-management'
-    container_name: rabbitmq
-    hostname: 'rabbitmq'
-    environment:
-      RABBITMQ_ERLANG_COOKIE: 'SWQOKODSQALRPCLNMEQG'
-      RABBITMQ_DEFAULT_USER: 'rabbitUsr'
-      RABBITMQ_DEFAULT_PASS: 'rabbitPwd'
-      RABBITMQ_DEFAULT_VHOST: '/'
+  fund-transfer-queue:
+    image: rabbitmq:3-management
+    container_name: fund-transfer-queue
     ports:
-      - '15672:15672'
-      - '5672:5672'
-    labels:
-      NAME: 'rabbitmq'
+      - "5672:5672"
+      - "15672:15672"
+    restart: always
 
-volumes:
-  mongodb-data: {}
+  fund-transfer-elk:
+    image: sebp/elk
+    container_name: fund-transfer-elk
+    ports:
+      - "5601:5601"
+      - "9200:9200"
+      - "5044:5044"
+    stdin_open: true
+    tty: true
+    restart: always

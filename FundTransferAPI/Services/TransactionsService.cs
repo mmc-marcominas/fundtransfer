@@ -22,9 +22,9 @@ public interface ITransactionsService
 public class TransactionsService : ITransactionsService
 {
     private readonly ITransactionsQueueService _transactionsQueueService;
-    private readonly TransactionsDatabaseService _databaseService;
+    private readonly ITransactionsDatabaseService _databaseService;
 
-    public TransactionsService(TransactionsDatabaseService databaseService, ITransactionsQueueService transactionsQueueService)
+    public TransactionsService(ITransactionsDatabaseService databaseService, ITransactionsQueueService transactionsQueueService)
     {
         _databaseService = databaseService;
         _transactionsQueueService = transactionsQueueService;

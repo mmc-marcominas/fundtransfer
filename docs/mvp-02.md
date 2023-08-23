@@ -59,9 +59,9 @@ Database access is implemented based on [Microsoft suggestion](https://learn.mic
 Tests is on Makefile and use [curl](https://curl.se/) and [jq](https://jqlang.github.io/jq/) to do the job - `curl` send request and `jq` process result giving a pretty JSON output. Try install `jq` if following error occour on test execution:
 
 ``` bash
-$ make get-authors
+$ make get-fund-transfer
 /bin/sh: 4: jq: not found
-make: *** [Makefile:5: get-authors] Error 127
+make: *** [Makefile:5: get-fund-transfer] Error 127
 ```
 
 ### Test POST fund-transfer
@@ -82,10 +82,10 @@ As result is expected something like this:
 
 ### Test GET fund-transfer
 
-To test authors retrieving, try:
+To test fund-transfer retrieving, try:
 
 ``` bash
-$ make get-fund-transfer
+$ make get-fund-transfer id=253b4724-459b-4b0e-80ad-3a97f99a699e
 ```
 
 As result is expected something like this:
@@ -102,3 +102,5 @@ or
   "message": "Transaction not found"
 }
 ```
+
+See [CHALLENGE.md#problema](CHALLENGE.md#problema) section to possible status list.

@@ -11,6 +11,7 @@ url := http://localhost:5010/api/fund-transfer
 #   make publish
 #   make run
 #   make all
+#   make start
 
 build:
 		@dotnet build --configuration Release

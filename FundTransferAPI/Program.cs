@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container. Singleton order matters, pay attention on it.
 builder.Services.AddSingleton<ITransactionsQueueService, TransactionsQueueService>();
 builder.Services.AddSingleton<ITransactionsService, TransactionsService>();
-builder.Services.AddSingleton<TransactionsDatabaseService>();
+builder.Services.AddSingleton<ITransactionsDatabaseService, TransactionsDatabaseService>();
 builder.Services.Configure<DatabaseSettings>(
     builder.Configuration.GetSection("TransactionDatabase"));
 builder.Services.Configure<QueueSettings>(
