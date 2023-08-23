@@ -6,6 +6,9 @@ using System.Text.Json;
 
 namespace FundTransferWorker;
 
+/// <summary>
+/// Background Service FundTransfer Worker
+/// </summary>
 public class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
@@ -13,6 +16,12 @@ public class Worker : BackgroundService
     private readonly IServiceScopeFactory _serviceScopeFactory;
     private IConnection _rabbitMQConnection = null!;
 
+    /// <summary>
+    /// Background Service FundTransfer Worker constructor
+    /// </summary>
+    /// <param name="logger"><see cref="ILogger<Worker>"/></param>
+    /// <param name="serviceScopeFactory"><see cref="IServiceScopeFactory"/></param>
+    /// <param name="queueSettings"><see cref="IOptions<QueueSettings>"/></param>
     public Worker(
         ILogger<Worker> logger,
         IServiceScopeFactory serviceScopeFactory,
@@ -24,6 +33,9 @@ public class Worker : BackgroundService
         InitializeRabbitMQConnection();
     }
 
+    /// <summary>
+    /// Initialize RabbitMQ connection
+    /// </summary>
     private void InitializeRabbitMQConnection()
     {
         var factory = new ConnectionFactory
@@ -33,6 +45,11 @@ public class Worker : BackgroundService
         _rabbitMQConnection = factory.CreateConnection();
     }
 
+    /// <summary>
+    /// ExecuteAsync implementation
+    /// </summary>
+    /// <param name="stoppingToken"><see cref="CancellationToken"/></param>
+    /// <returns></returns>
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         using var channel = _rabbitMQConnection.CreateModel();

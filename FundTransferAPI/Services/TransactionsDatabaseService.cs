@@ -3,10 +3,33 @@ using MongoDB.Driver;
 
 namespace FundTransfer.Services;
 
-public class TransactionsDatabaseService
+/// <summary>
+/// Transactions Database Service
+/// </summary>
+public interface ITransactionsDatabaseService
+{
+    Task<List<Transaction>> GetAsync();
+
+    Task<Transaction?> GetAsync(string transactionId);
+
+    Task CreateAsync(Transaction newTransaction);
+
+    Task UpdateAsync(string id, Transaction updatedTransaction);
+
+    Task RemoveAsync(string id);
+}
+
+/// <summary>
+/// Transactions Database Service
+/// </summary>
+public class TransactionsDatabaseService : ITransactionsDatabaseService
 {
     private readonly IMongoCollection<Transaction> _transactionsCollection;
 
+    /// <summary>
+    /// Transactions Database Service constructor
+    /// </summary>
+    /// <param name="databaseSettings"></param>
     public TransactionsDatabaseService(IOptions<DatabaseSettings> databaseSettings)
     {
         var mongoClient = new MongoClient(

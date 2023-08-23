@@ -14,6 +14,8 @@ Deliveries:
  * update database with status and error message when applicable
  * use HTTP client factory with polly to improve resilience
  * use ELK stack to manage application logs
+ * improve project documentation
+ * fix docker-compose of both projects
 
 ## Applied principles
 
@@ -35,7 +37,7 @@ This implementation use [ELK Docker](https://elk-docker.readthedocs.io/) contain
  * star application - this will start a ELK instance
  * open your local instance [http://localhost:5601](http://localhost:5601)
  * on right menu, select `Stack Management` and `Index Management`
- * choose `Index Templates` and create our `fund-transfer` index template.
+ * choose `Index Templates` and create our `fund-transfer` index template
  * suggestion: use `fund-transfer-template` name and `fund-transfer*` index pattern
 
 Next steps: refactor FundTransferAPI to use ELK stack too.
@@ -66,14 +68,14 @@ Next steps: refactor FundTransferAPI to use ELK stack too.
 Tests is on Makefile and use [curl](https://curl.se/) and [jq](https://jqlang.github.io/jq/) to do the job - `curl` send request and `jq` process result giving a pretty JSON output. Try install `jq` if following error occour on test execution:
 
 ``` bash
-$ make get-authors
+$ make get-fund-transfer
 /bin/sh: 4: jq: not found
-make: *** [Makefile:5: get-authors] Error 127
+make: *** [Makefile:5: get-fund-transfer] Error 127
 ```
 
 ### Test POST fund-transfer
 
-To test post author feature, try:
+To test post fund-transfer feature, try:
 
 ``` bash
 $ make post-fund-transfer origin=1234 destination=4321 value=10
@@ -89,10 +91,10 @@ As result is expected something like this:
 
 ### Test GET fund-transfer
 
-To test authors retrieving, try:
+To test fund-transfer retrieving, try:
 
 ``` bash
-$ make get-fund-transfer
+$ make get-fund-transfer id=253b4724-459b-4b0e-80ad-3a97f99a699e
 ```
 
 As result is expected something like this:
@@ -109,3 +111,5 @@ or
   "message": "Transaction not found"
 }
 ```
+
+See [CHALLENGE.md#problema](CHALLENGE.md#problema) section to possible status list.

@@ -5,6 +5,10 @@ using FundTransferWorker.Services;
 using Microsoft.Extensions.Options;
 
 namespace FundTransferWorker;
+
+/// <summary>
+/// FundTransfer Worker Service
+/// </summary>
 public class FundTransferService
 {
   private readonly ILogger<FundTransferService> _logger;
@@ -12,6 +16,13 @@ public class FundTransferService
   private readonly TransactionsDatabaseService _databaseService;
   private readonly AccountApiSettings _accountApiSettings;
 
+  /// <summary>
+  /// FundTransfer Worker Service
+  /// </summary>
+  /// <param name="logger"><see cref="ILogger<FundTransferService>"/></param>
+  /// <param name="httpClientFactory"><see cref="IHttpClientFactory"/></param>
+  /// <param name="accountApiSettings"><see cref="IOptions<AccountApiSettings>"/></param>
+  /// <param name="databaseService"><see cref="TransactionsDatabaseService"/></param>
   public FundTransferService(
     ILogger<FundTransferService> logger,
     IHttpClientFactory httpClientFactory,
@@ -24,6 +35,11 @@ public class FundTransferService
     _accountApiSettings = accountApiSettings.Value;
   }
 
+  /// <summary>
+  /// ProcessTransferAsync implementation
+  /// </summary>
+  /// <param name="transaction"><see cref="Transaction"/></param>
+  /// <returns></returns>
   public async Task ProcessTransferAsync(Transaction transaction)
   {
     var accountValidationResponse = await ValidateAccountAsync(transaction);

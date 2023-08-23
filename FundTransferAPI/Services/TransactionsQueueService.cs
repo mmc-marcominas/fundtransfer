@@ -5,16 +5,30 @@ using System.Text.Json;
 
 namespace FundTransfer.Services;
 
+/// <summary>
+/// Transactions Queue Service interface
+/// </summary>
 public interface ITransactionsQueueService
 {
+  /// <summary>
+  /// Enqueue
+  /// </summary>
+  /// <param name="transaction"></param>
   public void Enqueue(Transaction transaction);
 }
 
+/// <summary>
+/// Transactions Queue Service implementation
+/// </summary>
 public class TransactionsQueueService : ITransactionsQueueService
 {
   private readonly QueueSettings _queueSettings;
   private IConnection _rabbitMQConnection;
 
+  /// <summary>
+  ///  Transactions Queue Service constructor
+  /// </summary>
+  /// <param name="queueSettings"><see cref="IOptions<QueueSettings>"/></param>
   public TransactionsQueueService(IOptions<QueueSettings> queueSettings)
   {
     _queueSettings = queueSettings.Value;
@@ -26,6 +40,10 @@ public class TransactionsQueueService : ITransactionsQueueService
     _rabbitMQConnection = factory.CreateConnection();
   }
 
+  /// <summary>
+  /// Enqueue
+  /// </summary>
+  /// <param name="transaction"></param>
   public void Enqueue(Transaction transaction)
   {
     using var channel = _rabbitMQConnection.CreateModel();
